@@ -1,0 +1,76 @@
+comp of j and c
+
+-what are j and c
+both c and j are programming languages but they are as different as english and chinese
+
+c is an imperative programming language that was first created in 1972 by Dennis Ritche and Ken Thompson
+prior to c Thompson created B programming language for the development of unix operating system but it was slow
+then Ritche started improving B in 1971 and and called improved version New B, NB was used for developing unix kernel
+and the needs of doing that shaped the direction of the language development 
+through one year a new compiler was written and the language was renamed to C
+
+j is an array-oriented programming language that was first developed in early 1990s by Kenneth E. Iverson and Roger Hui
+which is based primarily on APL, which was also developed by Iverson and originally was developed as a mathematical notation
+J's main domain is mathematical processes that have multidimensional arrays as central datatypes
+instead of being compiled J programs are interpreted
+compared to APL J only uses ASCII characters to not have special character problem
+
+-what are imperative and array-oriented programming languages
+imperative programming is a programming paradigm that uses statements to change program's state
+an imperative program consists of commands for computer to perform step by step 
+
+array programming is a programming paradigm that operates on an entire set of values at once
+an array-oriented program processes differently dimensioned arrays transparently with no change in structure of the process
+
+---comparison
+
+--readability
+
+-simplicity
+simplicity of a programming language depends on number of unique features and redundancy of same process of features
+
+-orthogonality
+orthogonality is the program's features' independency of context of their appearance
+there are number of context dependent changes in features in C, for example:
+	using keyword static in global space to declare a variable makes that variable unreachable from other c files of the same program
+	but using it inside a function would result in allocating an independent memory to store variable's value and use same address for every
+	call of that function
+	
+	using binary addition operator plus on a pointer and an integer will give results depending on the type of the pointer. the addition of integer
+	is basically multiplied by the size of the type of the pointer
+although c is more simple and thus orthogonal than it's counterpart c++ and other popular imperative languages in this aspect
+j is inherently more orthogonal due to the fact that its design principle is to process data independently of its size and rank 
+although j also has some factors such as verbs (operators/functions) behaving differently when they are used dyadically (with two parameters) or monadically (with one parameter)
+for example:
+	using asteriks with two integers would give result of their multiplication but if it was to be used with only one integer it would return 
+	the sign of given integer
+this is the case for almost every verb in j language, although monadic and dyadic operations of verbs are similar and related most of the time
+this doesnt change the fact that they are not the same
+but this is a design choice of j and simply a feature, nothing like the special cases of c mentioned above. a more similar comparison would be
+a verb behaving differently even though it's used monadically or dyadically in both of the different contexts
+for example:
+	using left curly bracket with an integer x as left operand and a list of integers y as a right operand would return the item of y at index x
+	but if left operand was not an integer and instead was a list of integers then the result would be list of integers of y at given indexes in
+	each item of left operand
+this example can be said to show the context dependent behaviour of the left curly bracket verb. but similar to dyadic and monadic design of verbs
+this also is a design choice and actually has to do with rank of the verb. what the left curly bracket does is actually looking scalar items of left operand
+and getting the corresponding item of right operand for each, it neither cares the dimension of left operand nor the right operand, it always behaves
+on 0 rank (scalar/one dimensional) items for left operand and the entirety of right operand
+again every j verb has spesific ranks and always behave depending on those but not the actual size/dimension of its operands
+so is there no similar case for j, well there are few, for example:
+	the code "p. 0 _24 44 _24 4" (_x where x is number is negative x) will return "4" and list of four integers "3 2 1 0" in the form of "4;3 2 1 0"
+	what happens here is verb "p." is polynomial verb and it returns the roots of polynomial "0 + -24x + 44x^2 + -24x^3 + 4x^4". and the exact opposite
+	happens when you run "p. 4;3 2 1 0" which returns "0 _24 44 _24 4"
+as you can see here the verp p. behaves differently when given input has not different size but different structure, verb ";" won't be explained here but
+it simply results in a different form/structure with values "4" and "3 2 1 0" which is not a two dimensional array in which case p. would behave the same
+as it did for input "0 _24 44 _24 4" which is one dimensional integer array.
+
+-control statements
+unlike c j doesnt necessarily use loops, it supports it with keywords such as "for.", "while." etc but this goes against of the design philosophy of j and
+lets you execute equivalent process with its verbs already, for example:
+	to get minimum integer of a list of integers you simply do ">./ 1 7 2 9" which would return 9. theres no loop here, the verb >. returns the greater one
+	of its left and right operands and the adverb "/" executes the ver on its left as if it was inbetween of every item of the right operand which would be
+	"1 >. 7 >. 2 >. 9" and since j executes its verbs always in right to left direction without precedence difference this is equal to "(1 >. (7 >. (2 >. 9)))"
+to get the maximum integer from an array of integers you would have to write a loop in c
+being pointed out that j doesnt (necessarily) have loops it has some combination of verbs similar to switch control, for example:
+	the code "x +`-@.(2&|) y" will return results of "x+y" or "x-y" if "2|y" returns either 0 or 1 respectively
